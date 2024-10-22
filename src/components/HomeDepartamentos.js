@@ -22,45 +22,34 @@ export default class HomeDepartamentos extends Component {
     });
   };
 
-  eliminarDepartamento =(iddepartamento)=>{
-    let request = "api/departamentos/" + iddepartamento
-    let url = Global.apiUrlDepartamentos + request
+  /* ____________ LO COMENTO PORQUE VARIAMOS LA FORMA DE HACERLO ____________ */
+  
+//   eliminarDepartamento = (iddepartamento) => {
+//     let request = "api/departamentos/" + iddepartamento;
+//     let url = Global.apiUrlDepartamentos + request;
 
-    Swal.fire({
-        title: "¿Eliminar departamento con id "+ iddepartamento + "?",
-        text: "No será posible revertir esto",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, eliminar!"
-      }).then((result) => {
+//     Swal.fire({
+//       title: "¿Eliminar departamento con id " + iddepartamento + "?",
+//       text: "No será posible revertir esto",
+//       icon: "warning",
+//       showCancelButton: true,
+//       confirmButtonColor: "#3085d6",
+//       cancelButtonColor: "#d33",
+//       confirmButtonText: "Si, eliminar!",
+//     }).then((result) => {
+//       if (result.isConfirmed) {
+//         axios.delete(url).then((response) => {
+//           this.laodDepartamentos();
+//         });
 
-
-        if (result.isConfirmed) {
-
-            axios.delete(url).then(response=>{
-                this.laodDepartamentos()
-            })
-
-
-          Swal.fire({
-            title: "Eliminado",
-            text: "Departamento " +  iddepartamento +" eliminado!",
-            icon: "success"
-          });
-        }
-      });
-
-
-
-
-
-
-
-
-    
-  }
+//         Swal.fire({
+//           title: "Eliminado",
+//           text: "Departamento " + iddepartamento + " eliminado!",
+//           icon: "success",
+//         });
+//       }
+//     });
+//   };
 
   componentDidMount = () => {
     this.laodDepartamentos();
@@ -69,7 +58,7 @@ export default class HomeDepartamentos extends Component {
   render() {
     //en el render pero fuera del return para la imagen de loading
     if (this.state.status == false) {
-      return (<img src={loadingImage}/>)
+      return <img src={loadingImage} />;
     } else {
       return (
         <div>
@@ -92,8 +81,8 @@ export default class HomeDepartamentos extends Component {
           </div>
 
           <hr />
-          <div style={{padding:"20px"}}>
-            <table  className="table table-hover">
+          <div style={{ padding: "20px" }}>
+            <table className="table table-hover">
               <thead>
                 <tr className="table-dark">
                   <th>Numero</th>
@@ -105,32 +94,41 @@ export default class HomeDepartamentos extends Component {
                 </tr>
               </thead>
               <tbody>
-                {
-                this.state.departamentos.map((departamento, index) => {
+                {this.state.departamentos.map((departamento, index) => {
                   return (
                     <tr key={index}>
                       <td>{departamento.numero}</td>
                       <td>{departamento.nombre}</td>
                       <td>{departamento.localidad}</td>
                       <td>
-                        {<NavLink to={"/detalles/" + departamento.numero}>
-                                detalles
-                            </NavLink>}
+                        {
+                          <NavLink to={"/detalles/" + departamento.numero}>
+                            detalles
+                          </NavLink>
+                        }
                       </td>
                       <td>
-                        {<NavLink to={"/update/" + departamento.numero + "/" +departamento.nombre + "/" + departamento.localidad}>
-                                update
-                            </NavLink>}
+                        {
+                          <NavLink
+                            to={
+                              "/update/" +
+                              departamento.numero +
+                              "/" +
+                              departamento.nombre +
+                              "/" +
+                              departamento.localidad
+                            }
+                          >
+                            update
+                          </NavLink>
+                        }
                       </td>
-                      <button className="btn btn-danger" onClick={()=>{
-                        this.eliminarDepartamento(departamento.numero)
-                      }}>
+                      <NavLink to={"/delete/" + departamento.numero}>
                         Eliminar
-                      </button>
+                      </NavLink>
                     </tr>
                   );
-                })
-                }
+                })}
               </tbody>
             </table>
           </div>
