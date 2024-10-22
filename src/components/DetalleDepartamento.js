@@ -22,6 +22,8 @@ export default class DetalleDepartamento extends Component {
     this.loadDepartamento()
   }
 
+
+  
   render() {
     return (
       <div>
