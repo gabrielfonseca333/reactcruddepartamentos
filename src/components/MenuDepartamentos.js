@@ -33,16 +33,6 @@ export default class MenuDepartamentos extends Component {
                     Crear Departamento
                   </NavLink>
                 </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/detalles">
-                    Detalles
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/update">
-                    Modificar Departamento
-                  </NavLink>
-                </li>
               </ul>
             </div>
           </div>

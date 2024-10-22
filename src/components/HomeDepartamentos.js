@@ -3,6 +3,7 @@ import loadingImage from "./../assets/images/loading.jpg";
 import Global from "./Global";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default class HomeDepartamentos extends Component {
   state = {
@@ -20,6 +21,46 @@ export default class HomeDepartamentos extends Component {
       });
     });
   };
+
+  eliminarDepartamento =(iddepartamento)=>{
+    let request = "api/departamentos/" + iddepartamento
+    let url = Global.apiUrlDepartamentos + request
+
+    Swal.fire({
+        title: "¿Eliminar departamento con id "+ iddepartamento + "?",
+        text: "No será posible revertir esto",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar!"
+      }).then((result) => {
+
+
+        if (result.isConfirmed) {
+
+            axios.delete(url).then(response=>{
+                this.laodDepartamentos()
+            })
+
+
+          Swal.fire({
+            title: "Eliminado",
+            text: "Departamento " +  iddepartamento +" eliminado!",
+            icon: "success"
+          });
+        }
+      });
+
+
+
+
+
+
+
+
+    
+  }
 
   componentDidMount = () => {
     this.laodDepartamentos();
@@ -59,6 +100,8 @@ export default class HomeDepartamentos extends Component {
                   <th>Nombre</th>
                   <th>Localidad</th>
                   <th></th>
+                  <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -74,6 +117,16 @@ export default class HomeDepartamentos extends Component {
                                 detalles
                             </NavLink>}
                       </td>
+                      <td>
+                        {<NavLink to={"/update/" + departamento.numero + "/" +departamento.nombre + "/" + departamento.localidad}>
+                                update
+                            </NavLink>}
+                      </td>
+                      <button className="btn btn-danger" onClick={()=>{
+                        this.eliminarDepartamento(departamento.numero)
+                      }}>
+                        Eliminar
+                      </button>
                     </tr>
                   );
                 })
