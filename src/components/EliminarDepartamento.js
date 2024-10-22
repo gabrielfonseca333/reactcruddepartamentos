@@ -51,9 +51,9 @@ export default class EliminarDepartamento extends Component {
         return <Navigate to="/" />;
     }else{
         return (
-            <div>
-              <h1>Eliminar Departamento: {this.props.id}</h1>
-              <button onClick={()=>{
+            <div style={{textAlign:"center", border:"solid 3px red", borderRadius:"25px", padding:"20px"}}>
+              <h1 style={{color:"red"}}>Eliminar Departamento: {this.props.id}</h1>
+              <button className='btn btn-danger' onClick={()=>{
                   this.eliminarDepartamento(this.props.id)
               }}>Eliminar</button>
             </div>
